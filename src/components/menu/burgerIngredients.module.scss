@@ -1,0 +1,19 @@
+
+@import "../../utils/utils.module";
+
+
+.containerIngredients {
+    position: relative;
+    max-width: 600px;
+    height: 100%;
+    overflow-y: scroll;
+    @include scrollbars(8px, #8585AD, #2F2F37);
+
+    h2 {
+        text-align: left;
+    }
+
+}
+
+
+    
