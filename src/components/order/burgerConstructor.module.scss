@@ -1,0 +1,32 @@
+@import "../../utils/utils.module";
+
+.burgerConstructor {
+    min-height: 100px;
+    max-height: 100%;
+    width: 600px;
+    padding-top: 100px;
+    gap: 8px;
+
+    .list {
+        width: 100%;
+        max-height: 100%;
+        overflow-y: scroll;
+        @include scrollbars(8px, #8585AD, #2F2F37);
+        gap: 8px;
+
+        &>div>svg {
+            margin-right: 8px;
+        }
+    }
+
+    .sumPrice {
+        font-size: 36px;
+        line-height: 36px;
+    }
+    .currIcon {
+        svg {
+            width: 36px;
+            height: 36px;
+        }
+    }
+}
