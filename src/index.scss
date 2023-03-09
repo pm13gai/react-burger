@@ -4,7 +4,7 @@
     height: 100%;
 }
 %font-family {
-    font-family: "Jet Brains Mono", sans-serif !important;
+    font-family: "Jet Brains Mono", sans-serif;
 }
 
 html {
@@ -102,6 +102,10 @@ h1, h2, p {
 
 .h100pcnt {
     height: 100%;
+}
+
+.w100pcnt {
+    width: 100%;
 }
 
 .overflow-h {

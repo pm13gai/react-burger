@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { ingredientPropTypes, ingredientForConstructorPropTypes } from "../../utils/ingredientType"
+import { ingredientPropTypes } from "../../utils/ingredientType"
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import styles from './ingredientCard.module.scss'
@@ -40,5 +40,5 @@ export default IngredientCard;
 IngredientCard.propTypes = {
   options: ingredientPropTypes,
   onIngredientClick: PropTypes.func.isRequired,
-  ingredientsList: PropTypes.arrayOf(ingredientForConstructorPropTypes).isRequired
+  ingredientsList: PropTypes.arrayOf(ingredientPropTypes).isRequired
 };

@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import PropTypes from 'prop-types';
-import { ingredientPropTypes, ingredientForConstructorPropTypes } from "../../utils/ingredientType"
+import { ingredientPropTypes } from "../../utils/ingredientType"
 import MenuTabs from './menuTabs'
 import IngredientCard from './ingredientCard'
 
@@ -82,5 +82,5 @@ export default BurgerIngredients;
 BurgerIngredients.propTypes = {
     ingredients: PropTypes.arrayOf(ingredientPropTypes).isRequired,
     onIngredientClick: PropTypes.func.isRequired,
-    ingredientsList: PropTypes.arrayOf(ingredientForConstructorPropTypes).isRequired
+    ingredientsList: PropTypes.arrayOf(ingredientPropTypes).isRequired
 };
