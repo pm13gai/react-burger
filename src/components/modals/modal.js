@@ -1,32 +1,11 @@
 import ReactDOM from 'react-dom';
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import ModalOverlay from './modalOverlay'
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './modal.module.scss'
 
 const modalRoot = document.getElementById("react-modals");
-
-
-
-const Backdrop = ({ onClose }) => {
-    return <div className={styles.backdrop} onClick={onClose}></div>;
-};
-
-const ModalOverlay = ({ header, onClose, children }) => {
-    return (
-        <div className={`${styles.modal} flex flex-column p-10`}>
-            <div className="flex j-space-bt mb-4">
-                <p className="text text_type_main-large">
-                    {header}
-                </p>
-                <div ></div>
-                <CloseIcon type="primary" onClick={onClose} />
-            </div>
-
-            <div className={styles.content}>{children}</div>
-        </div>
-    );
-};
 
 
 const Modal = ({ header, onClose, children }) => {
@@ -46,20 +25,24 @@ const Modal = ({ header, onClose, children }) => {
 
 
 
-    return (
-        <>
+    return ReactDOM.createPortal(
+        (
+            <>
+                <div className={`${styles.modal} flex flex-column p-10`}>
+                    <div className="flex j-space-bt mb-4">
+                        <p className="text text_type_main-large">
+                            {header}
+                        </p>
+                        <div ></div>
+                        <CloseIcon type="primary" onClick={onClose} />
+                    </div>
 
-            {ReactDOM.createPortal(
-                <Backdrop onClose={onClose} />,
-                modalRoot
-            )}
-
-            {ReactDOM.createPortal(
-                <ModalOverlay header={header} onClose={onClose}>{children}</ModalOverlay>,
-                modalRoot
-            )}
-
-        </>
+                    <div className={styles.content}>{children}</div>
+                </div>
+                <ModalOverlay onClose={onClose} />
+            </>
+        ),
+        modalRoot
     );
 };
 

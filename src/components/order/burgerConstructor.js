@@ -1,19 +1,17 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from '../modals/modal'
+import OrderDetails from '../modals/orderDetails';
 import { ingredientPropTypes } from "../../utils/ingredientType"
 import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import img from '@ya.praktikum/react-developer-burger-ui-components/dist/images/img.png'
 
 import styles from './burgerConstructor.module.scss'
-import IngredientDetails from '../modals/ingredientDetails';
-import OrderDetails from '../modals/orderDetails';
+
 
 const BurgerConstructor = ({ ingredientsList, onChangeIngredientsList, bunDetails }) => {
 
   const [modalIsVisible, setModalIsVisible] = useState(false);
-  const [ingredientForModal, setIngredientForModal] = useState(null);
-
 
 
   const handleOpenModal = () => {
@@ -22,14 +20,8 @@ const BurgerConstructor = ({ ingredientsList, onChangeIngredientsList, bunDetail
 
   const handleCloseModal = () => {
     setModalIsVisible(false);
-    setIngredientForModal(null);
   }
 
-
-  const handleClickOnIngredient = (e, ingredient) => {
-    setIngredientForModal(ingredient);
-    setModalIsVisible(true);
-  }
 
   const handleClose = (e) => {
     e.stopPropagation();
@@ -40,7 +32,7 @@ const BurgerConstructor = ({ ingredientsList, onChangeIngredientsList, bunDetail
 
   return (
     <div className={`${styles.burgerConstructor} flex flex-column`}>
-      <div className="pl-8" onClick={e => handleClickOnIngredient(e, bunDetails)}>
+      <div className="pl-8">
         <ConstructorElement
           type="top"
           isLocked={true}
@@ -53,7 +45,7 @@ const BurgerConstructor = ({ ingredientsList, onChangeIngredientsList, bunDetail
       <div className={`${styles.list} flex flex-column`}>
         {ingredientsList.map(el => (<div id={el.idForList} key={el.idForList} className="li flex a-center">
           <DragIcon type="primary" />
-          <div className="w100pcnt" onClick={e => handleClickOnIngredient(e, el)}>
+          <div className="w100pcnt">
             <ConstructorElement
               text={el.name}
               price={el.price}
@@ -66,7 +58,7 @@ const BurgerConstructor = ({ ingredientsList, onChangeIngredientsList, bunDetail
       </div>
 
 
-      <div className="pl-8" onClick={e => handleClickOnIngredient(e, bunDetails)}>
+      <div className="pl-8">
         <ConstructorElement
           type="bottom"
           isLocked={true}
@@ -85,11 +77,8 @@ const BurgerConstructor = ({ ingredientsList, onChangeIngredientsList, bunDetail
         </Button>
       </div>
 
-      {modalIsVisible && (<Modal header={ingredientForModal ? 'Детали ингредиента' : null} onClose={handleCloseModal}>
-        {ingredientForModal ?
-          <IngredientDetails options={ingredientForModal} />
-          :
-          <OrderDetails />}
+      {modalIsVisible && (<Modal onClose={handleCloseModal}>
+        <OrderDetails />
       </Modal>)}
 
     </div>

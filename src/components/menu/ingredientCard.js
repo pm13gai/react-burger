@@ -5,7 +5,7 @@ import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-c
 
 import styles from './ingredientCard.module.scss'
 
-const IngredientCard = ({ options, onIngredientClick, ingredientsList }) => {
+const IngredientCard = ({ options, onIngredientClick, ingredientsList, handleClickShowDetails }) => {
   const [count, setCount] = useState(0)
 
   useEffect(() => {
@@ -15,7 +15,8 @@ const IngredientCard = ({ options, onIngredientClick, ingredientsList }) => {
 
   const handleClick = () => {
     setCount(count + 1);
-    onIngredientClick(options)
+    onIngredientClick(options);
+    handleClickShowDetails(options);
   }
 
 
@@ -40,5 +41,6 @@ export default IngredientCard;
 IngredientCard.propTypes = {
   options: ingredientPropTypes,
   onIngredientClick: PropTypes.func.isRequired,
+  handleClickShowDetails: PropTypes.func.isRequired,
   ingredientsList: PropTypes.arrayOf(ingredientPropTypes).isRequired
 };
