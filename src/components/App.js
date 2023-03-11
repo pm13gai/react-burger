@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import AppHeader from './components/header/appHeader'
+import AppHeader from './header/appHeader'
 
-import BurgerIngredients from './components/menu/burgerIngredients'
-import BurgerConstructor from './components/order/burgerConstructor'
-import './App.css';
+import BurgerIngredients from './menu/burgerIngredients'
+import BurgerConstructor from './order/burgerConstructor'
+import styles from './App.module.scss';
 
-const URL_FOR_INGREDIENTS = "https://norma.nomoreparties.space/api/ingredients";
+import { getIngredients } from '../utils/burgerApi'
 
 
 function App() {
@@ -14,16 +14,8 @@ function App() {
   const [ingredientsList, setIngredientsList] = useState([]);
 
   useEffect(() => {
-    fetch(URL_FOR_INGREDIENTS, {
-      method: 'GET',
-    }).then((response) => response.json())
-      .then((data) => {
-        setData(data.data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        setErr(error);
-      });
+
+    getIngredients().then(data => {setData(data.data)}).catch(error => {setErr(error)})
 
   }, [])
 
@@ -47,12 +39,12 @@ function App() {
       <AppHeader />
       <div className="flex j-center h100pcnt overflow-h">
         <div className="flex flex-column h100pcnt overflow-h mr-10">
-          <h1 className="mt-10 mb-5">Соберите бургер</h1>
+          <h1 className={`${styles.title} mt-10 mb-5`}>Соберите бургер</h1>
           {data && <BurgerIngredients ingredients={data} onIngredientClick={onIngredientClick} ingredientsList={ingredientsList} />}
           {err && <div>Нет данных</div>}
         </div>
         <div className="h100pcnt">
-          <BurgerConstructor ingredientsList={ingredientsList} onChangeIngredientsList={onChangeIngredientsList} />
+        {data && <BurgerConstructor ingredientsList={ingredientsList} onChangeIngredientsList={onChangeIngredientsList} bunDetails={data.find(el => el.name === 'Краторная булка N-200i')} />}
         </div>
 
       </div>

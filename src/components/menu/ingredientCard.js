@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { ingredientPropTypes, ingredientForConstructorPropTypes } from "../../utils/ingredientType"
+import { ingredientPropTypes } from "../../utils/ingredientType"
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import styles from './ingredientCard.module.scss'
 
-const IngredientCard = ({ options, onIngredientClick, ingredientsList }) => {
+const IngredientCard = ({ options, onIngredientClick, ingredientsList, handleClickShowDetails }) => {
   const [count, setCount] = useState(0)
 
   useEffect(() => {
@@ -15,7 +15,8 @@ const IngredientCard = ({ options, onIngredientClick, ingredientsList }) => {
 
   const handleClick = () => {
     setCount(count + 1);
-    onIngredientClick(options)
+    onIngredientClick(options);
+    handleClickShowDetails(options);
   }
 
 
@@ -40,5 +41,6 @@ export default IngredientCard;
 IngredientCard.propTypes = {
   options: ingredientPropTypes,
   onIngredientClick: PropTypes.func.isRequired,
-  ingredientsList: PropTypes.arrayOf(ingredientForConstructorPropTypes).isRequired
+  handleClickShowDetails: PropTypes.func.isRequired,
+  ingredientsList: PropTypes.arrayOf(ingredientPropTypes).isRequired
 };
