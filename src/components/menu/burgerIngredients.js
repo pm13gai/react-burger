@@ -19,7 +19,7 @@ function getScrollParent(node) {
     }
 }
 
-const BurgerIngredients = ({ ingredients, onIngredientClick, ingredientsList }) => {
+const BurgerIngredients = ({ ingredients }) => {
     const [ingredientForModal, setIngredientForModal] = useState(null);
 
     const bunRef = useRef(null);
@@ -75,11 +75,11 @@ const BurgerIngredients = ({ ingredients, onIngredientClick, ingredientsList }) 
 
             <div className={`${styles.containerIngredients} pt-10 pb-10`}>
                 <h2 ref={bunRef}>Булки</h2>
-                <div className='flex j-center wrap-1'>{ingredients.filter(el => el.type === "bun").map(el => <IngredientCard key={el._id} options={el} onIngredientClick={onIngredientClick} ingredientsList={ingredientsList} handleClickShowDetails={handleClickShowDetails} />)}</div>
+                <div className='flex j-center wrap-1'>{ingredients.filter(el => el.type === "bun").map(el => <IngredientCard key={el._id} options={el} handleClickShowDetails={handleClickShowDetails} />)}</div>
                 <h2 ref={sauceRef}>Соусы</h2>
-                <div className='flex j-center wrap-1'>{ingredients.filter(el => el.type === "sauce").map(el => <IngredientCard key={el._id} options={el} onIngredientClick={onIngredientClick} ingredientsList={ingredientsList} handleClickShowDetails={handleClickShowDetails} />)}</div>
+                <div className='flex j-center wrap-1'>{ingredients.filter(el => el.type === "sauce").map(el => <IngredientCard key={el._id} options={el} handleClickShowDetails={handleClickShowDetails} />)}</div>
                 <h2 ref={mainRef}>Начинки</h2>
-                <div className='flex j-center wrap-1'>{ingredients.filter(el => el.type === "main").map(el => <IngredientCard key={el._id} options={el} onIngredientClick={onIngredientClick} ingredientsList={ingredientsList} handleClickShowDetails={handleClickShowDetails} />)}</div>
+                <div className='flex j-center wrap-1'>{ingredients.filter(el => el.type === "main").map(el => <IngredientCard key={el._id} options={el} handleClickShowDetails={handleClickShowDetails} />)}</div>
 
             </div>
 
@@ -95,7 +95,5 @@ export default BurgerIngredients;
 
 
 BurgerIngredients.propTypes = {
-    ingredients: PropTypes.arrayOf(ingredientPropTypes).isRequired,
-    onIngredientClick: PropTypes.func.isRequired,
-    ingredientsList: PropTypes.arrayOf(ingredientPropTypes).isRequired
+    ingredients: PropTypes.arrayOf(ingredientPropTypes).isRequired
 };

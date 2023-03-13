@@ -10,3 +10,14 @@ export async function getIngredients() {
     return checkReponse(res);
 }
 
+
+export async function postIngredients(order) {
+    const res = await fetch(`${NORMA_API}/orders`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+        },
+        body: JSON.stringify(order)
+    });
+    return checkReponse(res);
+}
