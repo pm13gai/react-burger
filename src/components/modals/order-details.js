@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import logo from "../../images/done.svg"
 
-import styles from './orderDetails.module.scss'
+import styles from './order-details.module.scss'
 
 const OrderDetails = ({ orderNumber }) => {
 

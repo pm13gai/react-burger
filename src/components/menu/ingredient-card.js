@@ -1,25 +1,28 @@
 import { useEffect, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { ingredientPropTypes } from "../../utils/ingredientType"
+import { ingredientPropTypes } from "../../utils/ingredient-type"
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { IngredientsListContext } from '../../utils/appContext'
-import styles from './ingredientCard.module.scss'
+import { IngredientsOrderContext } from '../../utils/app-context'
+import styles from './ingredient-card.module.scss'
 
 const IngredientCard = ({ options, handleClickShowDetails }) => {
-  const { ingredientsList, setIngredientsList } = useContext(IngredientsListContext);
+  const { ingredientsOrder, setIngredientsOrder } = useContext(IngredientsOrderContext);
   const [count, setCount] = useState(0)
 
   useEffect(() => {
-    let new_count = ingredientsList.filter(el => el._id === options._id).length;
+    let new_count = ingredientsOrder.ingredients.filter(el => el._id === options._id).length;
     setCount(new_count);
-  }, [ingredientsList, options._id])
+  }, [ingredientsOrder, options._id])
 
   const handleClick = () => {
     if (options.type === 'bun') return;
 
     let ingredientToAdd = { ...options, idForList: options._id + count }
 
-    setIngredientsList([...ingredientsList, ingredientToAdd]);
+    setIngredientsOrder({
+      ...ingredientsOrder,
+      ingredients: [...ingredientsOrder.ingredients, ingredientToAdd]
+    });
     setCount(count + 1);
     handleClickShowDetails(options);
 
