@@ -1,12 +1,13 @@
+import PropTypes from 'prop-types';
 import logo from "../../images/done.svg"
 
-import styles from './orderDetails.module.scss'
+import styles from './order-details.module.scss'
 
-const OrderDetails = () => {
+const OrderDetails = ({ orderNumber }) => {
 
     return (
         <div className={`${styles.details} flex flex-column a-center j-space-bt h100pcnt`}>
-            <p className={`${styles.num} text text_type_digits-large mb-8`}>123456</p>
+            <p className={`${styles.num} text text_type_digits-large mb-8`}>{orderNumber}</p>
             <p className="text text_type_main-medium mb-15">
                 Идентификатор заказа
             </p>
@@ -25,3 +26,6 @@ const OrderDetails = () => {
 
 export default OrderDetails;
 
+OrderDetails.propTypes = {
+    orderNumber: PropTypes.number.isRequired
+};

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 
 
-//import styles from './navElement.module.scss'
 
 const MenuTabs = ({ setScroll }) => {
   const [current, setCurrent] = useState('one')
@@ -12,7 +11,7 @@ const MenuTabs = ({ setScroll }) => {
   }, [current, setScroll]);
 
   return (
-    <div style={{ display: 'flex' }}>
+    <div className="flex">
       <Tab value="one" active={current === 'one'} onClick={setCurrent}>
         Булки
       </Tab>

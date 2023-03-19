@@ -1,53 +1,48 @@
 import { useEffect, useState } from 'react';
-import AppHeader from './header/appHeader'
+import AppHeader from './header/app-header'
 
-import BurgerIngredients from './menu/burgerIngredients'
-import BurgerConstructor from './order/burgerConstructor'
-import styles from './App.module.scss';
+import BurgerIngredients from './menu/burger-ingredients'
+import BurgerConstructor from './order/burger-constructor'
+import styles from './app.module.scss';
 
-import { getIngredients } from '../utils/burgerApi'
+import { getIngredients } from '../utils/burger-api'
+import { IngredientsOrderContext, IngredientsDataContext } from '../utils/app-context'
 
 
 function App() {
-  const [data, setData] = useState();
+  const [ingredientsData, setIngredientsData] = useState();
   const [err, setErr] = useState(null);
-  const [ingredientsList, setIngredientsList] = useState([]);
+  const [ingredientsOrder, setIngredientsOrder] = useState({ bun: null, ingredients: [] });
 
   useEffect(() => {
-
-    getIngredients().then(data => {setData(data.data)}).catch(error => {setErr(error)})
-
+    getIngredients().then(data => { 
+      setIngredientsData(data.data);
+      setIngredientsOrder({
+        bun: data.data.find(el => el.name === 'Краторная булка N-200i'),
+        ingredients: []
+      })
+    }).catch(error => { setErr(error) })
   }, [])
 
 
-  const onIngredientClick = (ingredient) => {
-    let count = ingredientsList.reduce((count, el) => {
-      if (el._id === ingredient._id) return count + 1;
-      return count
-    }, 0);
-
-    let ingredientToAdd= { ...ingredient, idForList: ingredient._id + count }
-
-    setIngredientsList([...ingredientsList, ingredientToAdd]);
-
-  }
-  const onChangeIngredientsList = (id) => {
-    setIngredientsList(ingredientsList.slice(0).filter((el) => el.idForList !== id))
-  }
   return (
     <div className="flex flex-column h100pcnt overflow-h">
-      <AppHeader />
-      <div className="flex j-center h100pcnt overflow-h">
-        <div className="flex flex-column h100pcnt overflow-h mr-10">
-          <h1 className={`${styles.title} mt-10 mb-5`}>Соберите бургер</h1>
-          {data && <BurgerIngredients ingredients={data} onIngredientClick={onIngredientClick} ingredientsList={ingredientsList} />}
-          {err && <div>Нет данных</div>}
-        </div>
-        <div className="h100pcnt">
-        {data && <BurgerConstructor ingredientsList={ingredientsList} onChangeIngredientsList={onChangeIngredientsList} bunDetails={data.find(el => el.name === 'Краторная булка N-200i')} />}
-        </div>
+      <IngredientsDataContext.Provider value={{ ingredientsData, setIngredientsData }}>
+      <IngredientsOrderContext.Provider value={{ ingredientsOrder, setIngredientsOrder }}>
+        <AppHeader />
+        <div className="flex j-center h100pcnt overflow-h">
+          <div className="flex flex-column h100pcnt overflow-h mr-10">
+            <h1 className={`${styles.title} mt-10 mb-5`}>Соберите бургер</h1>
+            {ingredientsData && <BurgerIngredients ingredients={ingredientsData} />}
+            {err && <div>Нет данных</div>}
+          </div>
+          <div className="h100pcnt">
+            {ingredientsData && <BurgerConstructor />}
+          </div>
 
-      </div>
+        </div>
+      </IngredientsOrderContext.Provider>
+      </IngredientsDataContext.Provider>
     </div>
   );
 }

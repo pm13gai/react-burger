@@ -1,11 +1,10 @@
-import { useState, useRef } from 'react';
-import PropTypes from 'prop-types';
-import { ingredientPropTypes } from "../../utils/ingredientType"
-import MenuTabs from './menuTabs'
-import IngredientCard from './ingredientCard'
+import { useState, useRef, useContext } from 'react';
+import MenuTabs from './menu-tabs'
+import IngredientCard from './ingredient-card'
 import Modal from '../modals/modal';
-import IngredientDetails from '../modals/ingredientDetails';
-import styles from './burgerIngredients.module.scss'
+import IngredientDetails from '../modals/ingredient-details';
+import { IngredientsDataContext } from '../../utils/app-context'
+import styles from './burger-ingredients.module.scss'
 
 function getScrollParent(node) {
     if (node == null) {
@@ -19,7 +18,8 @@ function getScrollParent(node) {
     }
 }
 
-const BurgerIngredients = ({ ingredients, onIngredientClick, ingredientsList }) => {
+const BurgerIngredients = () => {
+    const { ingredientsData } = useContext(IngredientsDataContext);
     const [ingredientForModal, setIngredientForModal] = useState(null);
 
     const bunRef = useRef(null);
@@ -75,11 +75,11 @@ const BurgerIngredients = ({ ingredients, onIngredientClick, ingredientsList }) 
 
             <div className={`${styles.containerIngredients} pt-10 pb-10`}>
                 <h2 ref={bunRef}>Булки</h2>
-                <div className='flex j-center wrap-1'>{ingredients.filter(el => el.type === "bun").map(el => <IngredientCard key={el._id} options={el} onIngredientClick={onIngredientClick} ingredientsList={ingredientsList} handleClickShowDetails={handleClickShowDetails} />)}</div>
+                <div className='flex j-center wrap-1'>{ingredientsData.filter(el => el.type === "bun").map(el => <IngredientCard key={el._id} options={el} handleClickShowDetails={handleClickShowDetails} />)}</div>
                 <h2 ref={sauceRef}>Соусы</h2>
-                <div className='flex j-center wrap-1'>{ingredients.filter(el => el.type === "sauce").map(el => <IngredientCard key={el._id} options={el} onIngredientClick={onIngredientClick} ingredientsList={ingredientsList} handleClickShowDetails={handleClickShowDetails} />)}</div>
+                <div className='flex j-center wrap-1'>{ingredientsData.filter(el => el.type === "sauce").map(el => <IngredientCard key={el._id} options={el} handleClickShowDetails={handleClickShowDetails} />)}</div>
                 <h2 ref={mainRef}>Начинки</h2>
-                <div className='flex j-center wrap-1'>{ingredients.filter(el => el.type === "main").map(el => <IngredientCard key={el._id} options={el} onIngredientClick={onIngredientClick} ingredientsList={ingredientsList} handleClickShowDetails={handleClickShowDetails} />)}</div>
+                <div className='flex j-center wrap-1'>{ingredientsData.filter(el => el.type === "main").map(el => <IngredientCard key={el._id} options={el} handleClickShowDetails={handleClickShowDetails} />)}</div>
 
             </div>
 
@@ -93,9 +93,3 @@ const BurgerIngredients = ({ ingredients, onIngredientClick, ingredientsList }) 
 export default BurgerIngredients;
 
 
-
-BurgerIngredients.propTypes = {
-    ingredients: PropTypes.arrayOf(ingredientPropTypes).isRequired,
-    onIngredientClick: PropTypes.func.isRequired,
-    ingredientsList: PropTypes.arrayOf(ingredientPropTypes).isRequired
-};

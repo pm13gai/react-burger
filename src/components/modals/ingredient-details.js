@@ -1,5 +1,5 @@
-import { ingredientPropTypes } from "../../utils/ingredientType"
-import styles from './ingredientDetails.module.scss'
+import { ingredientPropTypes } from "../../utils/ingredient-type"
+import styles from './ingredient-details.module.scss'
 
 const IngredientDetails = ({ options }) => {
 
