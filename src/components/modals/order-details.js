@@ -1,10 +1,10 @@
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import logo from "../../images/done.svg"
 
 import styles from './order-details.module.scss'
 
-const OrderDetails = ({ orderNumber }) => {
-
+const OrderDetails = () => {
+    const orderNumber = useSelector(store => store.orderDetails.number);
     return (
         <div className={`${styles.details} flex flex-column a-center j-space-bt h100pcnt`}>
             <p className={`${styles.num} text text_type_digits-large mb-8`}>{orderNumber}</p>
@@ -25,7 +25,3 @@ const OrderDetails = ({ orderNumber }) => {
 }
 
 export default OrderDetails;
-
-OrderDetails.propTypes = {
-    orderNumber: PropTypes.number.isRequired
-};

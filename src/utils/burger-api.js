@@ -5,13 +5,13 @@ const checkReponse = (res) => {
     return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 };
 
-export async function getIngredients() {
+export async function getIngredientsFetch() {
     const res = await fetch(`${NORMA_API}/ingredients`);
     return checkReponse(res);
 }
 
 
-export async function postIngredients(order) {
+export async function postIngredientsFetch(order) {
     const res = await fetch(`${NORMA_API}/orders`, {
         method: 'POST',
         headers: {

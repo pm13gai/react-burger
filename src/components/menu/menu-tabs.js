@@ -1,24 +1,25 @@
-import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 
 
 
-const MenuTabs = ({ setScroll }) => {
-  const [current, setCurrent] = useState('one')
-  useEffect(() => {
-    setScroll(current)
-  }, [current, setScroll]);
+const MenuTabs = ({ setScroll, currentTab, setCurrentTab }) => {
+
+  const handleClick = (tab) => {
+    setCurrentTab(tab);
+    setScroll(tab);
+  }
+
 
   return (
     <div className="flex">
-      <Tab value="one" active={current === 'one'} onClick={setCurrent}>
+      <Tab value="one" active={currentTab === 'one'} onClick={handleClick}>
         Булки
       </Tab>
-      <Tab value="two" active={current === 'two'} onClick={setCurrent}>
+      <Tab value="two" active={currentTab === 'two'} onClick={handleClick}>
         Соусы
       </Tab>
-      <Tab value="three" active={current === 'three'} onClick={setCurrent}>
+      <Tab value="three" active={currentTab === 'three'} onClick={handleClick}>
         Начинки
       </Tab>
     </div>
@@ -28,5 +29,7 @@ const MenuTabs = ({ setScroll }) => {
 export default MenuTabs;
 
 MenuTabs.propTypes = {
-  setScroll: PropTypes.func.isRequired
+  setScroll: PropTypes.func.isRequired,
+  currentTab: PropTypes.string.isRequired,
+  setCurrentTab: PropTypes.func.isRequired
 };
