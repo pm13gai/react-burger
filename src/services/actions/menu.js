@@ -1,4 +1,4 @@
-import { getIngredientsFetch } from '../../utils/burger-api'
+import { request } from '../../utils/burger-api'
 import { SET_BUN } from './order';
 
 export const GET_INGREDIENTS = "GET_INGREDIENTS"
@@ -13,7 +13,7 @@ export const getIngredients = () => (dispatch) => {
     dispatch({
         type: GET_INGREDIENTS
     })
-    getIngredientsFetch().then(res => {
+    request('ingredients').then(res => {
         dispatch({
             type: GET_INGREDIENTS_SUCCESS,
             ingredients: res.data

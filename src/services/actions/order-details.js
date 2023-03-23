@@ -1,4 +1,4 @@
-import { postIngredientsFetch } from '../../utils/burger-api'
+import { request } from '../../utils/burger-api'
 import { REMOVE_ALL_INGREDIENTS } from './order';
 import { SET_INITIAL_COUNT } from './menu';
 
@@ -13,7 +13,13 @@ export const postIngredients = (order) => (dispatch, getState) => {
     dispatch({
         type: POST_ORDER
     })
-    postIngredientsFetch(order).then(res => {
+    request('orders', {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+        },
+        body: JSON.stringify(order)
+    }).then(res => {
         dispatch({
             type: POST_ORDER_SUCCESS,
             number: res.order.number
