@@ -9,7 +9,7 @@ export const POST_ORDER_SUCCESS = "POST_ORDER_SUCCESS"
 export const CLEAR_ORDER_DETAILS = "CLEAR_ORDER_DETAILS"
 
 
-export const postIngredients = (order) => (dispatch, getState) => {
+export const postIngredients = (order) => (dispatch) => {
     dispatch({
         type: POST_ORDER
     })
@@ -25,7 +25,7 @@ export const postIngredients = (order) => (dispatch, getState) => {
             number: res.order.number
         });
         dispatch({ type: REMOVE_ALL_INGREDIENTS });
-        dispatch({ type: SET_INITIAL_COUNT, bun: getState().order.bun });
+        dispatch({ type: SET_INITIAL_COUNT });
     }).catch(err => {
         dispatch({
             type: POST_ORDER_FAILED

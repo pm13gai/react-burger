@@ -16,8 +16,6 @@ function App() {
 
     const dispatch = useDispatch();
     const { ingredientsRequest, ingredientsFailed } = useSelector(store => store.menu);
-    const bun = useSelector(store => store.order.bun);
-
 
     useEffect(() => {
         dispatch(getIngredients());
@@ -28,8 +26,7 @@ function App() {
         <div className="flex flex-column h100pcnt overflow-h">
 
             <AppHeader />
-            {/* <h1 className={`${styles.title} mt-10 mb-5`}>Соберите бургер</h1> */}
-            <div className="flex j-center h100pcnt overflow-h">
+            <main className="flex j-center h100pcnt overflow-h">
                 <DndProvider backend={HTML5Backend}>
                     <div className="flex flex-column h100pcnt overflow-h mr-10">
                         <h1 className={`${styles.title} mt-10 mb-5`}>Соберите бургер</h1>
@@ -37,11 +34,11 @@ function App() {
                         {ingredientsFailed && <div>Нет данных</div>}
                     </div>
                     <div className="h100pcnt pt-25">
-                        {bun && <BurgerConstructor />}
+                        <BurgerConstructor />
                     </div>
 
                 </DndProvider>
-            </div>
+            </main>
 
         </div>
     );

@@ -42,7 +42,7 @@ export const menuReducer = (state = initialState, action) => {
         case SET_INITIAL_COUNT: {
             return {
                 ...state,
-                ingredients: state.ingredients.map(el => (action.bun._id === el._id ? { ...el, count: 2 } : { ...el, count: 0 })),
+                ingredients: state.ingredients.map(el => ({ ...el, count: 0 })),
             };
         }
 

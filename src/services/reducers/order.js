@@ -37,11 +37,7 @@ export const orderReducer = (state = initialState, action) => {
             };
         }
         case REMOVE_ALL_INGREDIENTS: {
-            return {
-                ...state,
-                ingredients: [],
-                totalPrice: state.bun.price * 2
-            };
+            return initialState;
         }
 
         case CHANGE_INGREDIENTS_ORDER: {

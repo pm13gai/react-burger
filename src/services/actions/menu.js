@@ -1,5 +1,4 @@
 import { request } from '../../utils/burger-api'
-import { SET_BUN } from './order';
 
 export const GET_INGREDIENTS = "GET_INGREDIENTS"
 export const GET_INGREDIENTS_FAILED = "GET_INGREDIENTS_FAILED"
@@ -18,14 +17,8 @@ export const getIngredients = () => (dispatch) => {
             type: GET_INGREDIENTS_SUCCESS,
             ingredients: res.data
         });
-        const defaultBun = res.data.find(el => el.type === 'bun');
         dispatch({
-            type: SET_BUN,
-            bun: defaultBun
-        });
-        dispatch({
-            type: SET_INITIAL_COUNT,
-            bun: defaultBun
+            type: SET_INITIAL_COUNT
         });
 
     }).catch(err => {
