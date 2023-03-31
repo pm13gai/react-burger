@@ -1,8 +1,8 @@
-import { ingredientPropTypes } from "../../utils/ingredient-type"
+import { useSelector } from 'react-redux';
 import styles from './ingredient-details.module.scss'
 
-const IngredientDetails = ({ options }) => {
-
+const IngredientDetails = () => {
+    const options = useSelector(store => store.ingredientDetails.ingredient);
 
     return (
         <div className={`${styles.details} flex flex-column a-center`}>
@@ -34,8 +34,3 @@ const IngredientDetails = ({ options }) => {
 
 export default IngredientDetails;
 
-
-
-IngredientDetails.propTypes = {
-    options: ingredientPropTypes,
-};

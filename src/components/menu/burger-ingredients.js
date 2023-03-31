@@ -1,9 +1,12 @@
-import { useState, useRef, useContext } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import MenuTabs from './menu-tabs'
 import IngredientCard from './ingredient-card'
 import Modal from '../modals/modal';
 import IngredientDetails from '../modals/ingredient-details';
-import { IngredientsDataContext } from '../../utils/app-context'
+import {
+    REMOVE_INGREDIENT_FOR_MODAL
+} from '../../services/actions/ingredient-details';
 import styles from './burger-ingredients.module.scss'
 
 function getScrollParent(node) {
@@ -19,19 +22,38 @@ function getScrollParent(node) {
 }
 
 const BurgerIngredients = () => {
-    const { ingredientsData } = useContext(IngredientsDataContext);
-    const [ingredientForModal, setIngredientForModal] = useState(null);
+    const [currentTab, setCurrentTab] = useState('one')
+    const ingredientsData = useSelector(store => store.menu.ingredients);
+    const ingredientForModal = useSelector(store => store.ingredientDetails.ingredient);
+    const dispatch = useDispatch();
 
     const bunRef = useRef(null);
     const sauceRef = useRef(null);
     const mainRef = useRef(null);
 
-    const handleClickShowDetails = (ingredient) => {
-        setIngredientForModal(ingredient);
-    }
+
+    useEffect(() => {
+        const handleScroll = (e) => {
+            let scrollTop = e.srcElement.scrollTop;
+            let tab = 'one';
+            if (scrollTop > bunRef.current.offsetTop - 30) tab = 'one';
+            if (scrollTop > sauceRef.current.offsetTop - 30) tab = 'two';
+            if (scrollTop > mainRef.current.offsetTop - 30) tab = 'three';
+            setCurrentTab(tab);
+
+        }
+        const containerIngredients = document.getElementById('containerIngredients')
+
+        containerIngredients.addEventListener('scroll', handleScroll);
+        return () => containerIngredients.removeEventListener('scroll', handleScroll);
+    }, []);
+
+
+
+
 
     const handleCloseModal = () => {
-        setIngredientForModal(null);
+        dispatch({ type: REMOVE_INGREDIENT_FOR_MODAL })
     }
 
 
@@ -71,20 +93,20 @@ const BurgerIngredients = () => {
 
     return (
         <div className="flex flex-column a-center h100pcnt overflow-h">
-            <MenuTabs setScroll={setScroll} />
+            <MenuTabs setScroll={setScroll} currentTab={currentTab} setCurrentTab={setCurrentTab} />
 
-            <div className={`${styles.containerIngredients} pt-10 pb-10`}>
+            <div id="containerIngredients" className={`${styles.containerIngredients} pt-10 pb-10`}>
                 <h2 ref={bunRef}>Булки</h2>
-                <div className='flex j-center wrap-1'>{ingredientsData.filter(el => el.type === "bun").map(el => <IngredientCard key={el._id} options={el} handleClickShowDetails={handleClickShowDetails} />)}</div>
+                <div className='flex j-center wrap-1'>{ingredientsData.filter(el => el.type === "bun").map(el => <IngredientCard key={el._id} options={el} />)}</div>
                 <h2 ref={sauceRef}>Соусы</h2>
-                <div className='flex j-center wrap-1'>{ingredientsData.filter(el => el.type === "sauce").map(el => <IngredientCard key={el._id} options={el} handleClickShowDetails={handleClickShowDetails} />)}</div>
+                <div className='flex j-center wrap-1'>{ingredientsData.filter(el => el.type === "sauce").map(el => <IngredientCard key={el._id} options={el} />)}</div>
                 <h2 ref={mainRef}>Начинки</h2>
-                <div className='flex j-center wrap-1'>{ingredientsData.filter(el => el.type === "main").map(el => <IngredientCard key={el._id} options={el} handleClickShowDetails={handleClickShowDetails} />)}</div>
+                <div className='flex j-center wrap-1'>{ingredientsData.filter(el => el.type === "main").map(el => <IngredientCard key={el._id} options={el} />)}</div>
 
             </div>
 
             {ingredientForModal && (<Modal header='Детали ингредиента' onClose={handleCloseModal}>
-                <IngredientDetails options={ingredientForModal} />
+                <IngredientDetails />
             </Modal>)}
         </div>
     )

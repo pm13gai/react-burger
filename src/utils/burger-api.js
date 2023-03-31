@@ -5,19 +5,8 @@ const checkReponse = (res) => {
     return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 };
 
-export async function getIngredients() {
-    const res = await fetch(`${NORMA_API}/ingredients`);
-    return checkReponse(res);
-}
 
-
-export async function postIngredients(order) {
-    const res = await fetch(`${NORMA_API}/orders`, {
-        method: 'POST',
-        headers: {
-            "Content-Type": "application/json; charset=utf-8",
-        },
-        body: JSON.stringify(order)
-    });
+export async function request(endpoint, options) {
+    const res = await fetch(`${NORMA_API}/${endpoint}`, options);
     return checkReponse(res);
 }
