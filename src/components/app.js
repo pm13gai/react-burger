@@ -1,47 +1,64 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { DndProvider } from 'react-dnd';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { HomePage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage } from '../pages';
+import {OnlyAuth, OnlyUnAuth} from "./protected-route";
 import AppHeader from './header/app-header'
+import {
+  REMOVE_INGREDIENT_FOR_MODAL
+} from '../services/actions/ingredient-details';
+import Modal from './modals/modal';
+import IngredientDetails from './modals/ingredient-details';
+import { NotFound } from './not-found';
+import { useDispatch } from 'react-redux';
 
-import BurgerIngredients from './menu/burger-ingredients'
-import BurgerConstructor from './order/burger-constructor'
-import styles from './app.module.scss';
+export default function App() {
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const background = location.state && location.state.background;
 
-import { getIngredients } from '../services/actions/menu';
+  const handleCloseModal = () => {
+    dispatch({ type: REMOVE_INGREDIENT_FOR_MODAL })
+    navigate(-1);
+  };
+
+  return (
+    <div className="flex flex-column h100pcnt overflow-h">
+
+     <AppHeader />
+   
+      <Routes location={background || location}>
+      <Route path="/" element={<HomePage/>} />
+      <Route path='/ingredients/:id' element={<IngredientDetails />} />
+
+      <Route path="/login" element={<OnlyUnAuth component={<LoginPage />}/>} />
+      <Route path="/register" element={<OnlyUnAuth component={<RegisterPage />}/>} />
+      <Route path="/forgot-password" element={<OnlyUnAuth component={<ForgotPasswordPage />}/>} />
+      <Route path="/reset-password" element={<OnlyUnAuth component={<ResetPasswordPage />}/>} />
+
+      <Route path="/profile" element={<OnlyAuth component={<ProfilePage />}/>} />
+      <Route path="/profile/orders" element={<OnlyAuth component={<ProfilePage />}/>} />
 
 
-function App() {
+        <Route path="*" element={<NotFound />} />
+      </Routes>
 
+      {background && (
+        <Routes>
+            <Route
+              path='/ingredients/:id'
+              element={
+                <Modal header='Детали ингредиента' onClose={handleCloseModal}>
+                <IngredientDetails />
+                </Modal>
+              }
+            />
+        </Routes>
+      )}
 
-    const dispatch = useDispatch();
-    const { ingredientsRequest, ingredientsFailed } = useSelector(store => store.menu);
+   
 
-    useEffect(() => {
-        dispatch(getIngredients());
-    }, [dispatch]);
-
-
-    return (
-        <div className="flex flex-column h100pcnt overflow-h">
-
-            <AppHeader />
-            <main className="flex j-center h100pcnt overflow-h">
-                <DndProvider backend={HTML5Backend}>
-                    <div className="flex flex-column h100pcnt overflow-h mr-10">
-                        <h1 className={`${styles.title} mt-10 mb-5`}>Соберите бургер</h1>
-                        {!ingredientsRequest && !ingredientsFailed && <BurgerIngredients />}
-                        {ingredientsFailed && <div>Нет данных</div>}
-                    </div>
-                    <div className="h100pcnt pt-25">
-                        <BurgerConstructor />
-                    </div>
-
-                </DndProvider>
-            </main>
-
-        </div>
-    );
+    </div>
+  );
 }
 
-export default App;
+

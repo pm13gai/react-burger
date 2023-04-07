@@ -19,6 +19,7 @@ import {
 import { postIngredients, CLEAR_ORDER_DETAILS } from '../../services/actions/order-details';
 
 import styles from './burger-constructor.module.scss'
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -27,8 +28,10 @@ const BurgerConstructor = () => {
   const [modalIsVisible, setModalIsVisible] = useState(false);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const ingredientsOrder = useSelector(store => store.order);
   const orderNumber = useSelector(store => store.orderDetails.number);
+  const user = useSelector(store => store.auth.user);
 
   const [{ isHover }, dropTarget] = useDrop({
     accept: "ingredient",
@@ -51,6 +54,10 @@ const BurgerConstructor = () => {
 
   const handleOpenModal = () => {
 
+    if (!user) {
+      navigate('/login');
+      return;
+    }
     dispatch(postIngredients({
       ingredients: [ingredientsOrder.bun._id, ...ingredientsOrder.ingredients]
     }));

@@ -1,12 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import MenuTabs from './menu-tabs'
 import IngredientCard from './ingredient-card'
-import Modal from '../modals/modal';
-import IngredientDetails from '../modals/ingredient-details';
-import {
-    REMOVE_INGREDIENT_FOR_MODAL
-} from '../../services/actions/ingredient-details';
+
+
 import styles from './burger-ingredients.module.scss'
 
 function getScrollParent(node) {
@@ -24,8 +21,6 @@ function getScrollParent(node) {
 const BurgerIngredients = () => {
     const [currentTab, setCurrentTab] = useState('one')
     const ingredientsData = useSelector(store => store.menu.ingredients);
-    const ingredientForModal = useSelector(store => store.ingredientDetails.ingredient);
-    const dispatch = useDispatch();
 
     const bunRef = useRef(null);
     const sauceRef = useRef(null);
@@ -51,10 +46,6 @@ const BurgerIngredients = () => {
 
 
 
-
-    const handleCloseModal = () => {
-        dispatch({ type: REMOVE_INGREDIENT_FOR_MODAL })
-    }
 
 
     const setScroll = (tab) => {
@@ -105,9 +96,6 @@ const BurgerIngredients = () => {
 
             </div>
 
-            {ingredientForModal && (<Modal header='Детали ингредиента' onClose={handleCloseModal}>
-                <IngredientDetails />
-            </Modal>)}
         </div>
     )
 }
