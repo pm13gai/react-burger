@@ -1,27 +1,22 @@
-import { useState } from 'react';
 import { Navigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import styles from './home.module.scss';
 import { emailRequest } from '../services/actions/reset';
+import { useForm } from '../hooks/useForm';
 
 
 
 export function ForgotPasswordPage() {
     const dispatch = useDispatch();
     const resetEmailSent = useSelector(store => store.reset.resetEmailSent);
-    const [data, setData] = useState({ email: '' });
-    const onChange = e => {
-        setData({
-            ...data,
-            [e.target.name]: e.target.value
-        });
-    }
+    const {values, handleChange } = useForm({ email: '' });
 
 
-    const handleSubmit = () => {
-        dispatch(emailRequest(data))
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch(emailRequest(values));
     }
 
     if (resetEmailSent) {
@@ -35,19 +30,19 @@ export function ForgotPasswordPage() {
     return (
         <div className="flex flex-column a-center j-center h100pcnt">
 
-            <form className="flex flex-column a-center">
+            <form className="flex flex-column a-center" onSubmit={handleSubmit}>
                 <h1 className={`${styles.heading} mb-6`}>Восстановление пароля</h1>
 
                 <EmailInput
-                    onChange={onChange}
-                    value={data.email}
+                    onChange={handleChange}
+                    value={values.email}
                     name={'email'}
                     placeholder="Укажите E-mail"
                     isIcon={false}
                     extraClass="mb-6"
                 />
 
-                <Button htmlType="submit" type="primary" size="large" extraClass="mb-20" onClick={handleSubmit} disabled={false}>
+                <Button htmlType="submit" type="primary" size="large" extraClass="mb-20" disabled={false}>
                     Восстановить
                 </Button>
 

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Navigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, PasswordInput, Input } from '@ya.praktikum/react-developer-burger-ui-components'
@@ -6,22 +5,18 @@ import { Button, PasswordInput, Input } from '@ya.praktikum/react-developer-burg
 import styles from './home.module.scss';
 
 import { changeRasswordRequest } from '../services/actions/reset';
+import { useForm } from '../hooks/useForm';
 
 
 export function ResetPasswordPage() {
     const dispatch = useDispatch();
     const resetEmailSent = useSelector(store => store.reset.resetEmailSent);
-    const [data, setData] = useState({ password: '', token: '' });
-    const onChange = e => {
-        setData({
-            ...data,
-            [e.target.name]: e.target.value
-        });
-    }
+    const {values, handleChange } = useForm({ password: '', token: '' });
 
 
-    const handleSubmit = () => {
-        dispatch(changeRasswordRequest(data))
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch(changeRasswordRequest(values));
     }
 
     if (!resetEmailSent) {
@@ -35,12 +30,12 @@ export function ResetPasswordPage() {
     return (
         <div className="flex flex-column a-center j-center h100pcnt">
 
-            <form className="flex flex-column a-center">
+            <form className="flex flex-column a-center" onSubmit={handleSubmit}>
                 <h1 className={`${styles.heading} mb-6`}>Восстановление пароля</h1>
 
                 <PasswordInput
-                    onChange={onChange}
-                    value={data.password}
+                    onChange={handleChange}
+                    value={values.password}
                     name={'password'}
                     placeholder="Введите новый пароль"
                     extraClass="mb-6"
@@ -48,8 +43,8 @@ export function ResetPasswordPage() {
                 <Input
                     type={'text'}
                     placeholder={'Введите код из письма'}
-                    onChange={onChange}
-                    value={data.token}
+                    onChange={handleChange}
+                    value={values.token}
                     name={'code'}
                     error={false}
                     errorText={'Ошибка'}
@@ -57,7 +52,7 @@ export function ResetPasswordPage() {
                     extraClass="mb-6"
                 />
 
-                <Button htmlType="submit" type="primary" size="large" extraClass="mb-20" onClick={handleSubmit} disabled={false}>
+                <Button htmlType="submit" type="primary" size="large" extraClass="mb-20" disabled={false}>
                     Сохранить
                 </Button>
 

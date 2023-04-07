@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { BurgerIcon, ProfileIcon, ListIcon, Logo } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import styles from './app-header.module.scss'
@@ -27,7 +27,10 @@ const AppHeader = () => {
 
 
             </div>
-            <div className="flex a-center ml-20 mr-30"><Logo /></div>
+            <Link to={'/'}>
+                <div className="flex a-center ml-20 mr-30"><Logo /></div>
+            </Link>
+
 
 
             <NavLink to={`/profile`} className={`${styles.navElement}`}>

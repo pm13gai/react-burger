@@ -8,6 +8,7 @@ import {
     logoutRequest
 } from '../services/actions/auth';
 import styles from './profile.module.scss';
+import { useForm } from '../hooks/useForm';
 
 
 
@@ -15,26 +16,21 @@ export function ProfilePage() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const user = useSelector(store => store.auth.user);
-    const [data, setData] = useState({ email: user.email, password: '', name: user.name });
+    const {values, handleChange, setValues } = useForm({ email: user.email, password: '', name: user.name });
     const [isChange, setIsChange] = useState(false);
-    const onChange = e => {
-        setData({
-            ...data,
-            [e.target.name]: e.target.value
-        });
 
-    }
     useEffect(() => {
-        if (user.email !== data.email || user.name !== data.name || data.password !== '') setIsChange(true);
+        if (user.email !== values.email || user.name !== values.name || values.password !== '') setIsChange(true);
         else setIsChange(false);
-    }, [data, user])
+    }, [values, user])
 
-    const handleSubmit = () => {
-        dispatch(patchUser(data));
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch(patchUser(values));
     }
 
     const handleCancel = () => {
-        setData({ email: user.email, password: '', name: user.name });
+        setValues({ email: user.email, password: '', name: user.name });
     }
     const handleLogout = () => {
         dispatch(logoutRequest());
@@ -72,27 +68,27 @@ export function ProfilePage() {
                 </p>
             </div>
             <div className={`${styles.content}`}>
-                <form className={`${styles.editForm} flex flex-column a-center`}>
+                <form className={`${styles.editForm} flex flex-column a-center`} onSubmit={handleSubmit}>
 
                     <Input
-                        onChange={onChange}
+                        onChange={handleChange}
                         icon='EditIcon'
-                        value={data.name}
+                        value={values.name}
                         name={'name'}
                         placeholder="Имя"
                         extraClass="mb-6"
                     />
                     <EmailInput
-                        onChange={onChange}
-                        value={data.email}
+                        onChange={handleChange}
+                        value={values.email}
                         name={'email'}
                         placeholder="Логин"
                         isIcon={true}
                         extraClass="mb-6"
                     />
                     <PasswordInput
-                        onChange={onChange}
-                        value={data.password}
+                        onChange={handleChange}
+                        value={values.password}
                         name={'password'}
                         icon="EditIcon"
                         extraClass="mb-6"
@@ -100,7 +96,7 @@ export function ProfilePage() {
 
                     {isChange &&
                         <div className='flex'>
-                            <Button htmlType="button" type="primary" size="small" extraClass="ml-2" onClick={handleSubmit}>
+                            <Button htmlType="submit" type="primary" size="small" extraClass="ml-2">
                                 Сохранить
                             </Button>
                             <Button htmlType="button" type="primary" size="small" extraClass="ml-2" onClick={handleCancel}>
