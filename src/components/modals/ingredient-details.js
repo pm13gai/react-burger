@@ -1,11 +1,21 @@
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom'
 import styles from './ingredient-details.module.scss'
 
 const IngredientDetails = () => {
-    const options = useSelector(store => store.ingredientDetails.ingredient);
+    const ingredient = useSelector(store => store.ingredientDetails.ingredient);
+    const ingredients = useSelector(store => store.menu.ingredients);
+
+    const { id } = useParams();
+    const options = ingredient ? ingredient : ingredients.find(el => el._id === id);
+
+
+    if (!options) {
+        return null;
+    }
 
     return (
-        <div className={`${styles.details} flex flex-column a-center`}>
+        <div className={`${styles.details} flex flex-column a-center h100pcnt j-center`}>
             <div><img alt={options.name} src={options.image_large} /></div>
             <p className={`text text_type_main-medium mb-8`}>{options.name}</p>
             <div className="flex a-center text_color_inactive mb-5">

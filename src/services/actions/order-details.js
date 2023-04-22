@@ -1,6 +1,7 @@
 import { request } from '../../utils/burger-api'
 import { REMOVE_ALL_INGREDIENTS } from './order';
 import { SET_INITIAL_COUNT } from './menu';
+import { getCookie } from '../../utils/utils';
 
 
 export const POST_ORDER = "POST_ORDER"
@@ -17,6 +18,7 @@ export const postIngredients = (order) => (dispatch) => {
         method: 'POST',
         headers: {
             "Content-Type": "application/json; charset=utf-8",
+            Authorization: 'Bearer ' + getCookie('token')
         },
         body: JSON.stringify(order)
     }).then(res => {
