@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { FormEvent, useEffect, useState } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 
 import { Button, EmailInput, PasswordInput, Input } from '@ya.praktikum/react-developer-burger-ui-components'
@@ -9,14 +8,15 @@ import {
 } from '../services/actions/auth';
 import styles from './profile.module.scss';
 import { useForm } from '../hooks/useForm';
+import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 
 
 
 export function ProfilePage() {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const user = useSelector(store => store.auth.user);
-    const {values, handleChange, setValues } = useForm({ email: user.email, password: '', name: user.name });
+    const user = useAppSelector(store => store.auth.user);
+    const { values, handleChange, setValues } = useForm({ email: user.email, password: '', name: user.name });
     const [isChange, setIsChange] = useState(false);
 
     useEffect(() => {
@@ -24,7 +24,7 @@ export function ProfilePage() {
         else setIsChange(false);
     }, [values, user])
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: FormEvent<HTMLElement>) => {
         e.preventDefault();
         dispatch(patchUser(values));
     }

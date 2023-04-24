@@ -1,5 +1,4 @@
 import { useState, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { v4 as uuidv4 } from 'uuid';
 import Modal from '../modals/modal'
@@ -20,20 +19,26 @@ import { postIngredients, CLEAR_ORDER_DETAILS } from '../../services/actions/ord
 
 import styles from './burger-constructor.module.scss'
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { IIngredientTypes } from '../../utils/ingredient-type';
 
 
-
+interface IIngredientsOrder {
+  bun: IIngredientTypes,
+  totalPrice: number,
+  ingredients: Array<IIngredientTypes>
+}
 
 const BurgerConstructor = () => {
   const [modalIsVisible, setModalIsVisible] = useState(false);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const ingredientsOrder = useSelector(store => store.order);
-  const orderNumber = useSelector(store => store.orderDetails.number);
-  const user = useSelector(store => store.auth.user);
+  const ingredientsOrder = useAppSelector<IIngredientsOrder>(store => store.order);
+  const orderNumber = useAppSelector(store => store.orderDetails.number);
+  const user = useAppSelector(store => store.auth.user);
 
-  const [{ isHover }, dropTarget] = useDrop({
+  const [{ isHover }, dropTarget]: any = useDrop<IIngredientTypes>({
     accept: "ingredient",
     collect: monitor => ({
       isHover: monitor.isOver(),
@@ -71,7 +76,7 @@ const BurgerConstructor = () => {
   }
 
 
-  const moveCard = useCallback((dragIndex, hoverIndex) => {
+  const moveCard = useCallback((dragIndex: number, hoverIndex: number) => {
     dispatch(changeIngredientsOrder(dragIndex, hoverIndex));
   }, [dispatch])
 
