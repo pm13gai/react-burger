@@ -1,11 +1,15 @@
-import PropTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
+import { FC } from 'react';
 
+interface IMenuTabsProps {
+  setScroll: (tab: string) => void,
+  currentTab: string,
+  setCurrentTab: (tab: string) => void
+}
 
+const MenuTabs: FC<IMenuTabsProps> = ({ setScroll, currentTab, setCurrentTab }) => {
 
-const MenuTabs = ({ setScroll, currentTab, setCurrentTab }) => {
-
-  const handleClick = (tab) => {
+  const handleClick = (tab: string) => {
     setCurrentTab(tab);
     setScroll(tab);
   }
@@ -27,9 +31,3 @@ const MenuTabs = ({ setScroll, currentTab, setCurrentTab }) => {
 }
 
 export default MenuTabs;
-
-MenuTabs.propTypes = {
-  setScroll: PropTypes.func.isRequired,
-  currentTab: PropTypes.string.isRequired,
-  setCurrentTab: PropTypes.func.isRequired
-};

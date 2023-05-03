@@ -1,6 +1,7 @@
+import { FC } from 'react';
 import { useDispatch } from 'react-redux';
 import { useDrag } from 'react-dnd';
-import { ingredientPropTypes } from "../../utils/ingredient-type"
+import { IIngredientTypes } from "../../utils/ingredient-type"
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import {
@@ -10,7 +11,11 @@ import {
 import styles from './ingredient-card.module.scss'
 import { useLocation, Link } from 'react-router-dom';
 
-const IngredientCard = ({ options }) => {
+
+interface ICardProps {
+  options: IIngredientTypes
+}
+const IngredientCard: FC<ICardProps> = ({ options }) => {
   const dispatch = useDispatch();
 
   const [, drag] = useDrag({
@@ -50,9 +55,3 @@ const IngredientCard = ({ options }) => {
 }
 
 export default IngredientCard;
-
-
-
-IngredientCard.propTypes = {
-  options: ingredientPropTypes,
-};

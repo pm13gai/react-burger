@@ -1,10 +1,11 @@
-import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
+import { useAppSelector } from '../../hooks/hooks';
+import { IIngredientTypes } from '../../utils/ingredient-type';
 import styles from './ingredient-details.module.scss'
 
 const IngredientDetails = () => {
-    const ingredient = useSelector(store => store.ingredientDetails.ingredient);
-    const ingredients = useSelector(store => store.menu.ingredients);
+    const ingredient = useAppSelector(store => store.ingredientDetails.ingredient);
+    const ingredients: Array<IIngredientTypes> = useAppSelector(store => store.menu.ingredients);
 
     const { id } = useParams();
     const options = ingredient ? ingredient : ingredients.find(el => el._id === id);

@@ -9,11 +9,11 @@ import {
 import Modal from './modals/modal';
 import IngredientDetails from './modals/ingredient-details';
 import { NotFound } from './not-found';
-import { useDispatch } from 'react-redux';
 import { getIngredients } from '../services/actions/menu';
+import { useAppDispatch } from '../hooks/hooks';
 
 export default function App() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const background = location.state && location.state.background;

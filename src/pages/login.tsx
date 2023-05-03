@@ -1,17 +1,18 @@
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import styles from './home.module.scss';
 import { loginRequest } from '../services/actions/auth';
 import { useForm } from '../hooks/useForm';
+import { useAppDispatch } from '../hooks/hooks';
+import { FormEvent } from 'react';
 
 
 export function LoginPage() {
-    const dispatch = useDispatch();
-    const {values, handleChange } = useForm({ email: '', password: '' });
+    const dispatch = useAppDispatch();
+    const { values, handleChange } = useForm({ email: '', password: '' });
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: FormEvent<HTMLElement>) => {
         e.preventDefault();
         dispatch(loginRequest(values));
     }

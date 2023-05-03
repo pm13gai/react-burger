@@ -1,20 +1,21 @@
 import { Navigate, Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { Button, PasswordInput, Input } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import styles from './home.module.scss';
 
 import { changeRasswordRequest } from '../services/actions/reset';
 import { useForm } from '../hooks/useForm';
+import { FormEvent } from 'react';
+import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 
 
 export function ResetPasswordPage() {
-    const dispatch = useDispatch();
-    const resetEmailSent = useSelector(store => store.reset.resetEmailSent);
-    const {values, handleChange } = useForm({ password: '', token: '' });
+    const dispatch = useAppDispatch();
+    const resetEmailSent = useAppSelector(store => store.reset.resetEmailSent);
+    const { values, handleChange } = useForm({ password: '', token: '' });
 
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: FormEvent<HTMLElement>) => {
         e.preventDefault();
         dispatch(changeRasswordRequest(values));
     }

@@ -3,12 +3,12 @@ import { setCookie, getCookie } from './utils';
 const NORMA_API = 'https://norma.nomoreparties.space/api'
 
 
-const checkReponse = (res) => {
-    return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+const checkReponse = (res: any) => {
+    return res.ok ? res.json() : res.json().then((err: any) => Promise.reject(err));
 };
 
 
-export async function request(endpoint, options) {
+export async function request(endpoint: string, options: any) {
     const res = await fetch(`${NORMA_API}/${endpoint}`, options);
     return checkReponse(res);
 }
@@ -23,11 +23,11 @@ export const refreshToken = () => {
     })
 };
 
-export const requestWithRefresh = async (endpoint, options) => {
+export const requestWithRefresh = async (endpoint: string, options: any) => {
     try {
         const res = await fetch(`${NORMA_API}/${endpoint}`, options);
         return await checkReponse(res);
-    } catch (err) {
+    } catch (err: any) {
         if (err.message === "jwt expired") {
             const refreshData = await refreshToken();
             if (!refreshData.success) {

@@ -1,8 +1,7 @@
-import { useRef } from 'react';
+import { FC, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
-import PropTypes from 'prop-types';
-import { ingredientPropTypes } from "../../utils/ingredient-type"
+import { IIngredientTypes } from "../../utils/ingredient-type"
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import {
@@ -13,12 +12,16 @@ import {
     DECREMENT_INGREDIENT_COUNT
 } from '../../services/actions/menu';
 
-
-const SliceCard = ({ options, index, moveCard }) => {
+interface ISliceCardProps {
+    options: IIngredientTypes,
+    index: number,
+    moveCard: (i: number, j: number) => void
+}
+const SliceCard: FC<ISliceCardProps> = ({ options, index, moveCard }) => {
     const dispatch = useDispatch();
 
-    const ref = useRef(null)
-    const [{ handlerId }, drop] = useDrop({
+    const ref = useRef<HTMLDivElement>(null)
+    const [{ handlerId }, drop]: any = useDrop<{ index: number, id: string }>({
         accept: 'slice',
         collect(monitor) {
             return {
@@ -41,7 +44,7 @@ const SliceCard = ({ options, index, moveCard }) => {
             const hoverMiddleY =
                 (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
             // Determine mouse position
-            const clientOffset = monitor.getClientOffset()
+            const clientOffset = monitor.getClientOffset()!
             // Get pixels to the top
             const hoverClientY = clientOffset.y - hoverBoundingRect.top
             // Only perform the move when the mouse has crossed half of the items height
@@ -78,8 +81,8 @@ const SliceCard = ({ options, index, moveCard }) => {
 
 
 
-    const handleClose = (e, ingredient) => {
-        e.stopPropagation();
+    const handleClose = (ingredient: IIngredientTypes) => {
+
         dispatch({ type: REMOVE_INGREDIENT, ingredient: ingredient });
         dispatch({ type: DECREMENT_INGREDIENT_COUNT, ingredient: ingredient });
     }
@@ -93,7 +96,7 @@ const SliceCard = ({ options, index, moveCard }) => {
                     text={options.name}
                     price={options.price}
                     thumbnail={options.image}
-                    handleClose={e => handleClose(e, options)}
+                    handleClose={() => handleClose(options)}
                 />
             </div>
 
@@ -104,9 +107,3 @@ const SliceCard = ({ options, index, moveCard }) => {
 export default SliceCard;
 
 
-
-SliceCard.propTypes = {
-    options: ingredientPropTypes,
-    index: PropTypes.number.isRequired,
-    moveCard: PropTypes.func.isRequired
-};

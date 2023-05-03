@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 
@@ -6,11 +5,12 @@ import { DndProvider } from 'react-dnd';
 import BurgerIngredients from '../components/menu/burger-ingredients'
 import BurgerConstructor from '../components/order/burger-constructor'
 import styles from './home.module.scss';
+import { useAppSelector } from '../hooks/hooks';
 
 
 
 export function HomePage() {
-    const { ingredientsRequest, ingredientsFailed } = useSelector(store => store.menu);
+    const { ingredientsRequest, ingredientsFailed } = useAppSelector(store => store.menu);
 
 
     return (
