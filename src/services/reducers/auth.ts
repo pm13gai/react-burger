@@ -1,17 +1,23 @@
 import {
     AUTH_REQUEST_FAILED,
     AUTH_REQUEST_SUCCESS,
-    LOGOUT_REQUEST_SUCCESS
+    LOGOUT_REQUEST_SUCCESS,
+    TAuthActions
 } from '../actions/auth';
 
+export type TAuthState = {
+    user: any;
+    isAuthChecked: boolean;
+    authFailed: boolean;
+};
 
-const initialState = {
+const initialState: TAuthState = {
     user: null,
     isAuthChecked: false,
     authFailed: false,
 }
 
-export const authReducer = (state = initialState, action) => {
+export const authReducer = (state = initialState, action: TAuthActions): TAuthState => {
     switch (action.type) {
 
         case AUTH_REQUEST_SUCCESS: {

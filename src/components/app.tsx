@@ -11,6 +11,10 @@ import IngredientDetails from './modals/ingredient-details';
 import { NotFound } from './not-found';
 import { getIngredients } from '../services/actions/menu';
 import { useAppDispatch } from '../hooks/hooks';
+import { FeedPage } from '../pages/feed';
+import OrderInfoCard from './feed/order-info-card';
+import ProfileOrders from './profile/profile-orders';
+import { ProfileUser } from './profile/profile-user';
 
 export default function App() {
   const dispatch = useAppDispatch();
@@ -35,14 +39,19 @@ export default function App() {
       <Routes location={background || location}>
         <Route path="/" element={<HomePage />} />
         <Route path='/ingredients/:id' element={<IngredientDetails />} />
+        <Route path="/feed" element={<FeedPage />} />
+        <Route path="/feed/:id" element={<OrderInfoCard />} />
 
         <Route path="/login" element={<OnlyUnAuth component={<LoginPage />} />} />
         <Route path="/register" element={<OnlyUnAuth component={<RegisterPage />} />} />
         <Route path="/forgot-password" element={<OnlyUnAuth component={<ForgotPasswordPage />} />} />
         <Route path="/reset-password" element={<OnlyUnAuth component={<ResetPasswordPage />} />} />
 
-        <Route path="/profile" element={<OnlyAuth component={<ProfilePage />} />} />
-        <Route path="/profile/orders" element={<OnlyAuth component={<ProfilePage />} />} />
+        <Route path="/profile" element={<OnlyAuth component={<ProfilePage />} />}>
+          <Route index element={<ProfileUser />} />
+          <Route path="orders" element={<ProfileOrders />} />
+        </Route>
+        <Route path="/profile/orders/:id" element={<OnlyAuth component={<OrderInfoCard />} />} />
 
 
         <Route path="*" element={<NotFound />} />
@@ -55,6 +64,22 @@ export default function App() {
             element={
               <Modal header='Детали ингредиента' onClose={handleCloseModal}>
                 <IngredientDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path='/feed/:id'
+            element={
+              <Modal onClose={handleCloseModal}>
+                <OrderInfoCard />
+              </Modal>
+            }
+          />
+          <Route
+            path='/profile/orders/:id'
+            element={
+              <Modal onClose={handleCloseModal}>
+                <OrderInfoCard />
               </Modal>
             }
           />

@@ -34,7 +34,7 @@ const BurgerConstructor = () => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const ingredientsOrder = useAppSelector<IIngredientsOrder>(store => store.order);
+  const ingredientsOrder = useAppSelector(store => store.order);
   const orderNumber = useAppSelector(store => store.orderDetails.number);
   const user = useAppSelector(store => store.auth.user);
 
@@ -63,8 +63,9 @@ const BurgerConstructor = () => {
       navigate('/login');
       return;
     }
+    const bun = ingredientsOrder.bun!;
     dispatch(postIngredients({
-      ingredients: [ingredientsOrder.bun._id, ...ingredientsOrder.ingredients]
+      ingredients: [bun._id, ...ingredientsOrder.ingredients]
     }));
 
     setModalIsVisible(true);

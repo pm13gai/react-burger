@@ -1,0 +1,12 @@
+@import "../../utils/utils.module";
+
+
+.container {
+    position: relative;
+    width: 584px;
+    height: 100%;
+    overflow-y: scroll;
+    @include scrollbars(8px, #8585AD, #2F2F37);
+    padding-right: 8px;
+
+}

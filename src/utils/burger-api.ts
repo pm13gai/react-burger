@@ -3,7 +3,7 @@ import { setCookie, getCookie } from './utils';
 const NORMA_API = 'https://norma.nomoreparties.space/api'
 
 
-const checkReponse = (res: any) => {
+const checkReponse = (res: Response) => {
     return res.ok ? res.json() : res.json().then((err: any) => Promise.reject(err));
 };
 

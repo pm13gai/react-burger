@@ -1,0 +1,60 @@
+.card {
+    background: #1C1C21;
+    border-radius: 40px;
+    padding: 24px;
+    margin-bottom: 16px;
+
+    .title {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 24px;
+    }
+    .statusDone {
+        color: #00CCCC;
+    }
+
+    .imgContainer {
+        flex-direction: row-reverse;
+        margin-right: 10px;
+    }
+
+    .ingredient {
+
+        margin-left: -10px;
+        position: relative;
+        left: 10px;
+        background: #131316;
+        width: 64px;
+        height: 64px;
+
+        background: linear-gradient(#131316, #131316) padding-box,
+            linear-gradient(to right, #801AB2, #4C4CFF) border-box;
+        border-radius: 50%;
+        border: 2px solid transparent;
+
+        img {
+            position: relative;
+            top: 15px;
+            width: 100%;
+            height: auto;
+            transform: scale(1.5);
+
+            &.withLabel {
+                opacity: 0.5;
+            }
+        }
+
+        .label {
+            position: absolute;
+            z-index: 1;
+            top: 20px;
+            left: 20px;
+        }
+    }
+}
+
+.link {
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+}

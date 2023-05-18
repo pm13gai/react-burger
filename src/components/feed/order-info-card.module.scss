@@ -1,0 +1,57 @@
+@import "../../utils/utils.module";
+
+.card {
+    max-width: 600px;
+
+    .title {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 24px;
+    }
+
+    .ingredientsContainer {
+        padding-right: 20px;
+        max-height: 300px;
+        overflow-y: scroll;
+        @include scrollbars(8px, #8585AD, #2F2F37);
+    }
+
+    .ingredient {
+        position: relative;
+        background: #131316;
+        width: 64px;
+        height: 64px;
+
+        background: linear-gradient(#131316, #131316) padding-box,
+            linear-gradient(to right, #801AB2, #4C4CFF) border-box;
+        border-radius: 50%;
+        border: 2px solid transparent;
+
+        img {
+            position: relative;
+            top: 15px;
+            width: 100%;
+            height: auto;
+            transform: scale(1.5);
+
+            &.withLabel {
+                opacity: 0.5;
+            }
+        }
+
+        .label {
+            position: absolute;
+            z-index: 1;
+            top: 20px;
+            left: 20px;
+        }
+    }
+
+    .price {
+        font-size: 28px;
+    }
+}
+
+.statusDone {
+    color: #00CCCC;
+}

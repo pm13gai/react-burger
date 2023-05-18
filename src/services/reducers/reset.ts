@@ -3,18 +3,25 @@ import {
     EMAIL_REQUEST_FAILED,
     EMAIL_REQUEST_SUCCESS,
     CHANGE_PASSWORD_REQUEST,
-    CHANGE_PASSWORD_SUCCESS
+    CHANGE_PASSWORD_SUCCESS,
+    TResetActions
 } from '../actions/reset';
 
+export type TResetState = {
+    emailRequest: boolean,
+    emailFailed: boolean,
+    resetEmailSent: boolean,
+    passwordChanged: boolean
+}
 
-const initialState = {
+const initialState: TResetState = {
     emailRequest: false,
     emailFailed: false,
     resetEmailSent: false,
     passwordChanged: false,
 }
 
-export const resetReducer = (state = initialState, action) => {
+export const resetReducer = (state = initialState, action: TResetActions): TResetState => {
     switch (action.type) {
         case EMAIL_REQUEST: {
             return {
