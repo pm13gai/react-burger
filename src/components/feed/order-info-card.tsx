@@ -1,8 +1,7 @@
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { useAppSelector } from '../../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { getOrderInfo } from '../../services/actions/order-info';
 import styles from './order-info-card.module.scss'
 
@@ -11,7 +10,7 @@ const OrderInfoCard = () => {
     const ingredientsData = useAppSelector(store => store.menu.ingredients);
     const { orders } = useAppSelector(store => store.feed);
     const { order } = useAppSelector(store => store.orderInfo);
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const { id } = useParams();
 

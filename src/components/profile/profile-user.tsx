@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 
 export function ProfileUser() {
     const dispatch = useAppDispatch();
-    const user = useAppSelector(store => store.auth.user);
+    const user = useAppSelector(store => store.auth.user)!;
     const { values, handleChange, setValues } = useForm({ email: user.email, password: '', name: user.name });
     const [isChange, setIsChange] = useState(false);
 

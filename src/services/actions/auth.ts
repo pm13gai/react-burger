@@ -1,6 +1,7 @@
 import { request } from '../../utils/burger-api'
 import { deleteCookie, setCookie, getCookie } from '../../utils/utils';
 import { AppDispatch, AppThunkAction } from '../store';
+import { ILoginRequestData, IRegisterRequestData, IUser } from '../types/auth';
 
 
 export const AUTH_REQUEST_FAILED: 'AUTH_REQUEST_FAILED' = "AUTH_REQUEST_FAILED"
@@ -12,7 +13,7 @@ export interface IAuthRequestFailedAction {
 }
 export interface IAuthRequestSuccessAction {
     readonly type: typeof AUTH_REQUEST_SUCCESS;
-    readonly user: any;
+    readonly user: IUser;
 }
 export interface ILogoutRequestSuccessAction {
     readonly type: typeof LOGOUT_REQUEST_SUCCESS;
@@ -23,7 +24,7 @@ export type TAuthActions =
     | IAuthRequestSuccessAction
     | ILogoutRequestSuccessAction;
 
-export const registerRequest = (data: any): AppThunkAction => (dispatch: AppDispatch) => {
+export const registerRequest = (data: IRegisterRequestData): AppThunkAction => (dispatch: AppDispatch) => {
 
     request('auth/register', {
         method: 'POST',
@@ -49,7 +50,7 @@ export const registerRequest = (data: any): AppThunkAction => (dispatch: AppDisp
     })
 }
 
-export const loginRequest = (data: any): AppThunkAction => (dispatch: AppDispatch) => {
+export const loginRequest = (data: ILoginRequestData): AppThunkAction => (dispatch: AppDispatch) => {
 
     request('auth/login', {
         method: 'POST',
@@ -108,7 +109,7 @@ export const checkUserAuth = (): AppThunkAction => (dispatch: AppDispatch) => {
 
 };
 
-export const patchUser = (data: any): AppThunkAction => (dispatch: AppDispatch) => {
+export const patchUser = (data: IRegisterRequestData): AppThunkAction => (dispatch: AppDispatch) => {
 
     request('auth/user', {
         method: 'PATCH',

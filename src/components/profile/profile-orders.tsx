@@ -1,16 +1,15 @@
 import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
 import FeedCard from '../feed/feed-card'
 import { connect as connectOrders, disconnect as disconnectOrders } from '../../services/actions/profile-orders';
 
 import styles from '../feed/order-feed.module.scss'
-import { useAppSelector } from '../../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { getCookie } from '../../utils/utils';
 
 const ProfileOrders = () => {
 
     const ordersData = useAppSelector(store => store.profileOrders.orders);
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     useEffect(() => {
         const accessToken = getCookie('token');
         dispatch(connectOrders(`wss://norma.nomoreparties.space/orders?token=${accessToken}`));

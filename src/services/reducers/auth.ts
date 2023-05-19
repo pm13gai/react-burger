@@ -4,9 +4,10 @@ import {
     LOGOUT_REQUEST_SUCCESS,
     TAuthActions
 } from '../actions/auth';
+import { IUser } from '../types/auth';
 
 export type TAuthState = {
-    user: any;
+    user: IUser | null;
     isAuthChecked: boolean;
     authFailed: boolean;
 };

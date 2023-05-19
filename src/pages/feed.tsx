@@ -1,9 +1,8 @@
 
 import styles from './home.module.scss';
-import { useAppSelector } from '../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import OrderFeed from '../components/feed/order-feed';
 import OrderReport from '../components/feed/order-report';
-import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { connect as connectFeed, disconnect as disconnectFeed } from '../services/actions/feed';
 
@@ -11,7 +10,7 @@ import { connect as connectFeed, disconnect as disconnectFeed } from '../service
 
 export function FeedPage() {
     const { ingredientsRequest, ingredientsFailed } = useAppSelector(store => store.menu);
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     useEffect(() => {
         dispatch(connectFeed('wss://norma.nomoreparties.space/orders/all'));
         return () => { dispatch(disconnectFeed()) }
