@@ -1,18 +1,26 @@
+import { IIngredientTypes } from '../../utils/ingredient-type';
 import {
     SET_BUN,
     ADD_INGREDIENT,
     REMOVE_INGREDIENT,
     REMOVE_ALL_INGREDIENTS,
-    CHANGE_INGREDIENTS_ORDER
+    CHANGE_INGREDIENTS_ORDER,
+    TOrderActions
 } from '../actions/order';
 
-const initialState = {
+export type TOrderState = {
+    bun: IIngredientTypes | null,
+    ingredients: Array<IIngredientTypes>,
+    totalPrice: number
+}
+
+const initialState: TOrderState = {
     bun: null,
     ingredients: [],
     totalPrice: 0
 }
 
-export const orderReducer = (state = initialState, action) => {
+export const orderReducer = (state = initialState, action: TOrderActions): TOrderState => {
     switch (action.type) {
         case SET_BUN: {
             const bunPrice = state.bun ? state.bun.price : 0;

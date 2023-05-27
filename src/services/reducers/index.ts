@@ -5,6 +5,9 @@ import { orderDetailsReducer } from './order-details';
 import { ingredientDetailsReducer } from './ingredient-details';
 import { authReducer } from './auth';
 import { resetReducer } from './reset';
+import { feedReducer } from './feed';
+import { orderInfoReducer } from './order-info';
+import { profileOrdersReducer } from './profile-orders';
 
 
 
@@ -14,5 +17,8 @@ export const rootReducer = combineReducers({
   orderDetails: orderDetailsReducer,
   ingredientDetails: ingredientDetailsReducer,
   auth: authReducer,
-  reset: resetReducer
+  reset: resetReducer,
+  feed: feedReducer,
+  orderInfo: orderInfoReducer,
+  profileOrders: profileOrdersReducer
 });

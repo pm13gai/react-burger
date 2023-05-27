@@ -1,21 +1,27 @@
+import { IIngredientTypes } from '../../utils/ingredient-type';
 import {
     GET_INGREDIENTS,
     GET_INGREDIENTS_FAILED,
     GET_INGREDIENTS_SUCCESS,
     SET_INITIAL_COUNT,
     INCREMENT_INGREDIENT_COUNT,
-    DECREMENT_INGREDIENT_COUNT
+    DECREMENT_INGREDIENT_COUNT,
+    TMenuActions
 } from '../actions/menu';
 
+export type TMenuState = {
+    ingredientsRequest: boolean,
+    ingredientsFailed: boolean,
+    ingredients: ReadonlyArray<IIngredientTypes>
+}
 
-
-const initialState = {
+const initialState: TMenuState = {
     ingredientsRequest: false,
     ingredientsFailed: false,
     ingredients: []
 }
 
-export const menuReducer = (state = initialState, action) => {
+export const menuReducer = (state = initialState, action: TMenuActions): TMenuState => {
     switch (action.type) {
         case GET_INGREDIENTS: {
             return {

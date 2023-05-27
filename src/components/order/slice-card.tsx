@@ -1,5 +1,4 @@
 import { FC, useRef } from 'react';
-import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
 import { IIngredientTypes } from "../../utils/ingredient-type"
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
@@ -11,6 +10,7 @@ import {
 import {
     DECREMENT_INGREDIENT_COUNT
 } from '../../services/actions/menu';
+import { useAppDispatch } from '../../hooks/hooks';
 
 interface ISliceCardProps {
     options: IIngredientTypes,
@@ -18,7 +18,7 @@ interface ISliceCardProps {
     moveCard: (i: number, j: number) => void
 }
 const SliceCard: FC<ISliceCardProps> = ({ options, index, moveCard }) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const ref = useRef<HTMLDivElement>(null)
     const [{ handlerId }, drop]: any = useDrop<{ index: number, id: string }>({

@@ -1,15 +1,30 @@
 import { request } from '../../utils/burger-api'
 import { deleteCookie, setCookie, getCookie } from '../../utils/utils';
+import { AppDispatch, AppThunkAction } from '../store';
+import { ILoginRequestData, IRegisterRequestData, IUser } from '../types/auth';
 
 
-export const AUTH_REQUEST_FAILED = "AUTH_REQUEST_FAILED"
-export const AUTH_REQUEST_SUCCESS = "AUTH_REQUEST_SUCCESS"
-export const LOGOUT_REQUEST_SUCCESS = "LOGOUT_REQUEST_SUCCESS"
+export const AUTH_REQUEST_FAILED: 'AUTH_REQUEST_FAILED' = "AUTH_REQUEST_FAILED"
+export const AUTH_REQUEST_SUCCESS: 'AUTH_REQUEST_SUCCESS' = "AUTH_REQUEST_SUCCESS"
+export const LOGOUT_REQUEST_SUCCESS: 'LOGOUT_REQUEST_SUCCESS' = "LOGOUT_REQUEST_SUCCESS"
 
+export interface IAuthRequestFailedAction {
+    readonly type: typeof AUTH_REQUEST_FAILED;
+}
+export interface IAuthRequestSuccessAction {
+    readonly type: typeof AUTH_REQUEST_SUCCESS;
+    readonly user: IUser;
+}
+export interface ILogoutRequestSuccessAction {
+    readonly type: typeof LOGOUT_REQUEST_SUCCESS;
+}
 
+export type TAuthActions =
+    | IAuthRequestFailedAction
+    | IAuthRequestSuccessAction
+    | ILogoutRequestSuccessAction;
 
-
-export const registerRequest = (data) => (dispatch) => {
+export const registerRequest = (data: IRegisterRequestData): AppThunkAction => (dispatch: AppDispatch) => {
 
     request('auth/register', {
         method: 'POST',
@@ -35,7 +50,7 @@ export const registerRequest = (data) => (dispatch) => {
     })
 }
 
-export const loginRequest = (data) => (dispatch) => {
+export const loginRequest = (data: ILoginRequestData): AppThunkAction => (dispatch: AppDispatch) => {
 
     request('auth/login', {
         method: 'POST',
@@ -61,7 +76,7 @@ export const loginRequest = (data) => (dispatch) => {
     })
 }
 
-export const getUser = () => (dispatch) => {
+export const getUser = (): AppThunkAction => (dispatch: AppDispatch) => {
 
     request('auth/user', {
         method: 'GET',
@@ -83,7 +98,7 @@ export const getUser = () => (dispatch) => {
     })
 }
 
-export const checkUserAuth = () => (dispatch) => {
+export const checkUserAuth = (): AppThunkAction => (dispatch: AppDispatch) => {
     if (getCookie('token')) {
         dispatch(getUser());
     } else {
@@ -94,7 +109,7 @@ export const checkUserAuth = () => (dispatch) => {
 
 };
 
-export const patchUser = (data) => (dispatch) => {
+export const patchUser = (data: IRegisterRequestData): AppThunkAction => (dispatch: AppDispatch) => {
 
     request('auth/user', {
         method: 'PATCH',
@@ -115,7 +130,7 @@ export const patchUser = (data) => (dispatch) => {
     })
 }
 
-export const logoutRequest = () => (dispatch) => {
+export const logoutRequest = (): AppThunkAction => (dispatch: AppDispatch) => {
 
     request('auth/logout', {
         method: 'POST',

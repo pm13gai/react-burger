@@ -2,19 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { rootReducer } from './services/reducers';
 import './index.scss';
 import App from './components/app'
 
 import reportWebVitals from './reportWebVitals';
-import { configureStore } from '@reduxjs/toolkit';
+import { store } from './services/store';
 
 
-export const store = configureStore({
-  reducer: rootReducer
-})
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
 
 const root = ReactDOM.createRoot(
   document.getElementById('root')!

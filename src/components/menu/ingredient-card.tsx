@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { useDispatch } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import { IIngredientTypes } from "../../utils/ingredient-type"
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
@@ -10,13 +9,14 @@ import {
 
 import styles from './ingredient-card.module.scss'
 import { useLocation, Link } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks/hooks';
 
 
 interface ICardProps {
   options: IIngredientTypes
 }
 const IngredientCard: FC<ICardProps> = ({ options }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [, drag] = useDrag({
     type: "ingredient",

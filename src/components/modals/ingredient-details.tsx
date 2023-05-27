@@ -5,7 +5,7 @@ import styles from './ingredient-details.module.scss'
 
 const IngredientDetails = () => {
     const ingredient = useAppSelector(store => store.ingredientDetails.ingredient);
-    const ingredients: Array<IIngredientTypes> = useAppSelector(store => store.menu.ingredients);
+    const ingredients: ReadonlyArray<IIngredientTypes> = useAppSelector(store => store.menu.ingredients);
 
     const { id } = useParams();
     const options = ingredient ? ingredient : ingredients.find(el => el._id === id);
