@@ -14,7 +14,7 @@ export type TResetState = {
     passwordChanged: boolean
 }
 
-const initialState: TResetState = {
+export const initialState: TResetState = {
     emailRequest: false,
     emailFailed: false,
     resetEmailSent: false,

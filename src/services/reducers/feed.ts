@@ -12,7 +12,7 @@ export type TFeedState = {
 
 }
 
-const initialState: TFeedState = {
+export const initialState: TFeedState = {
     status: WebsocketStatus.OFFLINE,
     connectionError: '',
     orders: [],
@@ -36,6 +36,7 @@ export const feedReducer = createReducer(initialState, (builder) => {
         state.connectionError = action.payload;
       })
       .addCase(wsMessage, (state, action) => {
+        console.log(action.payload.orders)
         state.orders = action.payload.orders;
         state.total = action.payload.total;
         state.totalToday = action.payload.totalToday;

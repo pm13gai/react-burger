@@ -1,0 +1,9 @@
+{
+    "success": true,
+    "accessToken": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NDU4MDg4NDVjNmYyMDAxYmU2Y2Y4OCIsImlhdCI6MTY4NTMxNDAwNSwiZXhwIjoxNjg1MzE1MjA1fQ.4u0omm_Ij8VE5TL3D233x_-3mjmPOALdhrBmTuulHAE",
+    "refreshToken": "5b1cec322dc3b9f70cc45b9ab73c43e901ea26d382e4776c35cf412c89e3685c2e4828bd110eeb6e",
+    "user": {
+        "email": "vitaly@space.ru",
+        "name": "Vital"
+    }
+}

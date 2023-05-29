@@ -15,7 +15,7 @@ export type TMenuState = {
     ingredients: ReadonlyArray<IIngredientTypes>
 }
 
-const initialState: TMenuState = {
+export const initialState: TMenuState = {
     ingredientsRequest: false,
     ingredientsFailed: false,
     ingredients: []
