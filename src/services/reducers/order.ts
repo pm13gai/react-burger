@@ -14,7 +14,7 @@ export type TOrderState = {
     totalPrice: number
 }
 
-const initialState: TOrderState = {
+export const initialState: TOrderState = {
     bun: null,
     ingredients: [],
     totalPrice: 0
